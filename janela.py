@@ -15,6 +15,7 @@ class Janela:
         master["bg"] = "#333c63"
         self.titulo = Label(master,
                             bg="#333c63",
+                            fg='#b4c0db',
                             text="🐍 Jogo da cobrinha 🐍",
                             font=("Monospace", "20"))
         self.titulo.pack(side="top",

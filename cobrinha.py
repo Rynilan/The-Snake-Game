@@ -122,10 +122,10 @@ class Cobrinha:
             self.comando_dir = lambda: self.desenhar('dir')
             self.comando_esq = lambda: self.desenhar('esq')
             botoes.append(Button(master,
-                                 text="virar para a esquerda",
+                                 text="virar para a sua esquerda",
                                  command=self.comando_esq))
             botoes.append(Button(master,
-                                 text="virar para a direita",
+                                 text="virar para a sua direita",
                                  command=self.comando_dir))
             botoes[0].grid(row=0, column=0)
             botoes[1].grid(row=0, column=1)
