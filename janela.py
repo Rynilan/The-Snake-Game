@@ -12,26 +12,28 @@ class Janela:
     cobrinha: Cobrinha
 
     def __init__(self: object, master: Tk) -> None:
-        master["bg"] = "#8f8f8f"
+        master["bg"] = "#333c63"
         self.titulo = Label(master,
-                            bg="#8f8f8f",
+                            bg="#333c63",
                             text="🐍 Jogo da cobrinha 🐍",
                             font=("Monospace", "20"))
         self.titulo.pack(side="top",
                          fill="x")
         self.sair = Button(master,
-                           bg="#8f8f8f",
+                           bg="#b4c0db",
+                           fg='#0b4342',
                            text="sair",
                            font=("Monospace", "20"),
                            command=master.destroy)
         self.sair.pack(side="bottom",
                        fill="x")
         self.animation = Frame(master,
-                               bg="#8f8f8f")
+                               bg="#333c63")
         self.animation.pack(fill="both")
         self.cobrinha = Cobrinha(self.animation, self)
         self.animar = Button(self.animation,
-                             bg="#8f8f8f",
+                             bg="#b4c0db",
+                             fg="#0b4342",
                              text="iniciar",
                              font=("Monospace", "20"),
                              command=self.iniciar_animacao)
@@ -49,4 +51,3 @@ class Janela:
     def recomecar(self: object) -> None:
         self.animar['text'] = 'Recomeçar'
         self.animar.pack()
-
