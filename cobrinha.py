@@ -144,7 +144,7 @@ class Cobrinha:
 
     def framework(self: object) -> None:
         while not self.morto:
-            sleep(0.5)
+            sleep(0.2)
             self.desenhar(self.proximo)
             self.proximo = 'fre'
 
