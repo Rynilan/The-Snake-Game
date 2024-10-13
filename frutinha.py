@@ -13,7 +13,6 @@ class Frutinha:
         self.fruta = (10 + int(random() * 50) * 10,
                       60 + int(random() * 30) * 10)
         while self.fruta in cobra:
-            print('ai dento')
             self.fruta = (10 + int(random() * 50) * 10,
                           10 + int(random() * 30) * 10)
 
