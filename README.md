@@ -15,15 +15,15 @@ soo, I stepped back and did a simpler thing, a snake game.
 
 Just clone the repository, enter on the folder and run the main.py  
 file, don't worry, there's no malware or spyware on this. Then hit the  
-button to play and enjoy (you can also use the numpad arrows, with the  
-num lock disabled).
+button to play and enjoy.
 
 ## Controling the snake
 
-The way that the snake is controlled is different of the clasical way,  
-the buttons make it go to its right or its left, the foward movment is  
-automatic.
+Once the way that the snake was controlled was different of the clasical way,  
+the buttons made it go to its right or its left, the foward movment is  
+and still automatic, but now the arrow keys make the snake go to its literal  
+direction, up, up, down, down and soo on.
 
 ## Losing
 
-You lose when hit a wall or your own body.
+You lose when hit a wall or your own body, pretty standart.
