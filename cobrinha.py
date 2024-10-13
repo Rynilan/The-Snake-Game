@@ -5,19 +5,18 @@ from time import sleep
 
 
 class Cobrinha:
-    frame: Frame
-    canvas: Canvas
-    botoes: tuple[Button]
-    fruta: Frutinha
+    frame: Frame = None
+    canvas: Canvas = None
+    botoes: tuple[Button] = None
+    fruta: Frutinha = None
     placar: int = 0
     maior: int = 0
     comando_dir = None
     comando_esq = None
-    comando_fre = None
-    comando_fic = None
+    comando_nad = None
     morto: bool = False
     proximo: str = 'fre'
-    thread: Thread
+    thread: Thread = None
     pontos: tuple[tuple[int]] = (
         (250, 140),
         (250, 150),
@@ -37,12 +36,28 @@ class Cobrinha:
     def set_proximo(self: object, proximo: str) -> None:
         self.proximo = proximo
 
+    def ajustar_botoes(self: object, proximo: str) -> None:
+        botoes = self.botoes
+        comandos = [botao.cget('command') for botao in botoes]
+        comandos.insert(0, comandos[-1])
+        comandos.append(comandos[1])
+        comandos = tuple(comandos)
+        deslocamento = 1
+        if proximo == 'dir':
+            deslocamento += -1
+        elif proximo == 'esq':
+            deslocamento += +1
+        for indice, botao in enumerate(botoes):
+            pos = indice + deslocamento
+            botao.config(command=comandos[pos])
+
     def mexer(self: object, direcao: str) -> None:
         if direcao not in ('esq', 'dir', 'fre'):
             return
         pontos = self.pontos
         delta: int = (pontos[0][0] - pontos[1][0], pontos[0][1] - pontos[1][1])
         novos_pontos: list[tuple[int, int]] = [pontos[0]]
+        self.ajustar_botoes(direcao)
         if delta[0] != 0:
             dir: tuple[int, int] = (delta[1], delta[0])
             esq: tuple[int, int] = (delta[1], delta[0] * - 1)
@@ -103,8 +118,6 @@ class Cobrinha:
                            font=('Monospace', '15'),
                            fill='#ffffff')
         self.placar = 0
-        self.frame.master.unbind("<KP_Right>")
-        self.frame.master.unbind("<KP_Left>")
         self.__pai.recomecar()
         self.pontos = (
             (250, 140),
@@ -115,36 +128,42 @@ class Cobrinha:
     def iniciar(self: object) -> None:
         self.fruta.criar_fruta(self.pontos)
         self.morto = False
-        botoes = list()
         if self.comando_dir is None:
+            botoes = list()
             master = Frame(self.frame.master, bg="#333c63")
             master.pack()
-            self.comando_dir = lambda: self.desenhar('dir')
-            self.comando_esq = lambda: self.desenhar('esq')
+            self.comando_dir = lambda: self.set_proximo('dir')
+            self.comando_esq = lambda: self.set_proximo('esq')
+            self.comando_nad = lambda: self.set_proximo('fre')
             botoes.append(Button(master,
-                                 text="virar para a sua esquerda",
-                                 command=self.comando_esq))
+                                 text="←"))
             botoes.append(Button(master,
-                                 text="virar para a sua direita",
-                                 command=self.comando_dir))
-            botoes[0].grid(row=0, column=0)
+                                 text='↑'))
+            botoes.append(Button(master,
+                                 text="→"))
+            botoes.append(Button(master,
+                                 text='↓'))
+            botoes[0].grid(row=1, column=0)
             botoes[1].grid(row=0, column=1)
-            self.botoes = botoes
+            botoes[2].grid(row=1, column=2)
+            botoes[3].grid(row=1, column=1)
+            self.botoes = tuple(botoes)
         for botao in self.botoes:
             botao.config(
                        state='normal',
                        bg="#b4c0db",
                        fg='#0b4342')
-        self.frame.master.bind("<KP_Right>",
-                               lambda evento: self.set_proximo('dir'))
-        self.frame.master.bind("<KP_Left>",
-                               lambda evento: self.set_proximo('esq'))
+        self.botoes[0].config(command=self.comando_esq)
+        self.botoes[1].config(command=self.comando_nad)
+        self.botoes[2].config(command=self.comando_dir)
+        self.botoes[3].config(command=self.comando_nad)
         self.thread = Thread(target=self.framework)
+        self.thread.daemon = True
         self.thread.start()
 
     def framework(self: object) -> None:
         while not self.morto:
-            sleep(0.2)
+            sleep(0.5)
             self.desenhar(self.proximo)
             self.proximo = 'fre'
 

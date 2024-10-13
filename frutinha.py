@@ -22,4 +22,4 @@ class Frutinha:
                     self.fruta[0] == coordenadas[0])
 
     def por_fruta(self: object) -> None:
-        self.tela.create_text(self.fruta, text='🥭')
+        self.tela.create_text(self.fruta, text='🍎')

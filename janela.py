@@ -13,6 +13,7 @@ class Janela:
 
     def __init__(self: object, master: Tk) -> None:
         master["bg"] = "#333c63"
+        master.bind("<Escape>", lambda evento: self.kill())
         self.titulo = Label(master,
                             bg="#333c63",
                             fg='#b4c0db',
